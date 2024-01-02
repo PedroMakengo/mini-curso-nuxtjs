@@ -13,4 +13,5 @@ export default defineComponent({
 
 <template>
   <div>você está no vídeos de numero {{ idParams }}</div>
+  <VideosDetalhes />
 </template>

@@ -4,8 +4,6 @@ export default defineNuxtConfig({
   alias: {
     css: '/<rootDir>/assets/css',
   },
-  // app: {
-  //   baseURL: process.env.BASE_URL || 'http://localhost:3000',
-  // },
+  components: [{ path: '~/shared/icons', prefix: 'Icon' }, '~/components'],
   css: ['@/assets/css/main.css'],
 })
