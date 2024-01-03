@@ -4,8 +4,13 @@ import { computed, defineComponent } from 'vue'
 export default defineComponent({
   setup() {
     const route = useRoute()
-
     const idParams = computed(() => route.params.id)
+
+    // Definir um layout para está tela
+    definePageMeta({
+      layout: 'exibicao',
+    })
+
     return { idParams }
   },
 })

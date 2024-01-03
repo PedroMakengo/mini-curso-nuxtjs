@@ -4,6 +4,5 @@ export default defineNuxtConfig({
   alias: {
     css: '/<rootDir>/assets/css',
   },
-  components: [{ path: '~/shared/icons', prefix: 'Icon' }, '~/components'],
   css: ['@/assets/css/main.css'],
 })
