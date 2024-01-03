@@ -9,6 +9,7 @@ export default defineComponent({
     // Definir um layout para está tela
     definePageMeta({
       layout: 'exibicao',
+      middleware: ['video', 'auth'],
     })
 
     return { idParams }
