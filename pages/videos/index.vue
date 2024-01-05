@@ -31,26 +31,16 @@ export default defineComponent({
         data_postagem: '2023-10-15',
       },
     ]
+    const { $toast } = useNuxtApp()
 
-    // const favoritos = useFavoritos()
     const { adicionarFavoritos } = useVideoStore()
 
     // Funções
-    const converteDataBrasil = (dataAtual: string) => {
-      return new Date(dataAtual).toLocaleDateString('pt-BR')
-    }
+    onMounted(() => {
+      $toast.success('Toast adicionado com sucesso')
+    })
 
-    // const adicionarFavoritos = (video: Video) => {
-    //   const favoritosFiltrados = favoritos.some((v) => v.id === video.id)
-
-    //   if (!favoritosFiltrados) {
-    //     favoritos.push(video)
-    //   } else {
-    //     alert('Vídeo já adicionado aos favoritos!')
-    //   }
-    // }
-
-    return { videos, converteDataBrasil, adicionarFavoritos }
+    return { videos, adicionarFavoritos }
   },
 })
 </script>
@@ -63,7 +53,7 @@ export default defineComponent({
   <div class="videos">
     <div v-for="(video, index) in videos" :key="index">
       <h2>{{ video.descricao }}</h2>
-      <p>{{ converteDataBrasil(video.data_postagem) }}</p>
+      <p v-data-horario="'dd/mm/yyyy'">{{ video.data_postagem }}</p>
       <iframe
         :src="video.url"
         width="550"

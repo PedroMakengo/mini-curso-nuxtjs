@@ -6,6 +6,7 @@ export default defineComponent({
   setup() {
     // const favoritos = useFavoritos()
 
+    const { $toast } = useNuxtApp()
     const videoStore = useVideoStore()
     const { favoritos } = storeToRefs(videoStore)
 
@@ -14,12 +15,13 @@ export default defineComponent({
       return new Date(dataAtual).toLocaleDateString('pt-BR')
     }
 
-    // const removerFavoritos = (id: string | number) => {
-    //   const favoritosFiltrados = favoritos.value.filter((x) => x.id !== id)
-    //   favoritos.value = favoritosFiltrados
-    // }
+    const removeFavorito = (id: number) => {
+      videoStore.removerFavoritos(id)
 
-    return { favoritos, converteDataBrasil, videoStore }
+      $toast.error('Removido com sucesso')
+    }
+
+    return { favoritos, converteDataBrasil, removeFavorito }
   },
 })
 </script>
@@ -42,9 +44,7 @@ export default defineComponent({
         ></iframe>
 
         <div>
-          <button @click="videoStore.removerFavoritos(video.id)">
-            Remover Favorito
-          </button>
+          <button @click="removeFavorito(video.id)">Remover Favorito</button>
         </div>
       </div>
     </div>
