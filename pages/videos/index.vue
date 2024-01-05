@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { Video } from '~/interfaces/video'
-import { useFavoritos } from '~/composables/states'
+// import { useFavoritos } from '~/composables/states'
+import { useVideoStore } from '../../stores/video'
 
 export default defineComponent({
   setup() {
@@ -31,22 +32,23 @@ export default defineComponent({
       },
     ]
 
-    const favoritos = useFavoritos()
+    // const favoritos = useFavoritos()
+    const { adicionarFavoritos } = useVideoStore()
 
     // Funções
     const converteDataBrasil = (dataAtual: string) => {
       return new Date(dataAtual).toLocaleDateString('pt-BR')
     }
 
-    const adicionarFavoritos = (video: Video) => {
-      const favoritosFiltrados = favoritos.value.some((v) => v.id === video.id)
+    // const adicionarFavoritos = (video: Video) => {
+    //   const favoritosFiltrados = favoritos.some((v) => v.id === video.id)
 
-      if (!favoritosFiltrados) {
-        favoritos.value.push(video)
-      } else {
-        alert('Vídeo já adicionado aos favoritos!')
-      }
-    }
+    //   if (!favoritosFiltrados) {
+    //     favoritos.push(video)
+    //   } else {
+    //     alert('Vídeo já adicionado aos favoritos!')
+    //   }
+    // }
 
     return { videos, converteDataBrasil, adicionarFavoritos }
   },

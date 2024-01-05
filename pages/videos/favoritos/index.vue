@@ -1,21 +1,25 @@
 <script lang="ts">
 import { useFavoritos } from '~/composables/states'
+import { useVideoStore } from '../../../stores/video'
 
 export default defineComponent({
   setup() {
-    const favoritos = useFavoritos()
+    // const favoritos = useFavoritos()
+
+    const videoStore = useVideoStore()
+    const { favoritos } = storeToRefs(videoStore)
 
     // FUNÇÕES
     const converteDataBrasil = (dataAtual: string) => {
       return new Date(dataAtual).toLocaleDateString('pt-BR')
     }
 
-    const removerFavoritos = (id: string | number) => {
-      const favoritosFiltrados = favoritos.value.filter((x) => x.id !== id)
-      favoritos.value = favoritosFiltrados
-    }
+    // const removerFavoritos = (id: string | number) => {
+    //   const favoritosFiltrados = favoritos.value.filter((x) => x.id !== id)
+    //   favoritos.value = favoritosFiltrados
+    // }
 
-    return { favoritos, converteDataBrasil, removerFavoritos }
+    return { favoritos, converteDataBrasil, videoStore }
   },
 })
 </script>
@@ -38,7 +42,9 @@ export default defineComponent({
         ></iframe>
 
         <div>
-          <button @click="removerFavoritos(video.id)">Remover Favorito</button>
+          <button @click="videoStore.removerFavoritos(video.id)">
+            Remover Favorito
+          </button>
         </div>
       </div>
     </div>
