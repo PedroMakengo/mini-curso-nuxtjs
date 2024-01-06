@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { Video } from '~/interfaces/video'
-// import { useFavoritos } from '~/composables/states'
-import { useVideoStore } from '../../stores/video'
+import { useVideoStore } from '@/stores/video'
 
 export default defineComponent({
   setup() {
@@ -36,52 +35,58 @@ export default defineComponent({
     const { adicionarFavoritos } = useVideoStore()
 
     // Funções
-    onMounted(() => {
-      $toast.success('Toast adicionado com sucesso')
-    })
 
-    return { videos, adicionarFavoritos }
+    const adicionarFavorito = (video: Video) => {
+      adicionarFavoritos(video)
+      $toast.success('Toast adicionado com sucesso')
+    }
+
+    return { videos, adicionarFavorito }
   },
 })
 </script>
 
 <template>
-  <div>Vídeos</div>
+  <div class="text-4xl pt-4 pb-6">{{ $t('titulo') }}</div>
 
-  <NuxtLink to="/videos/favoritos">Favoritos</NuxtLink>
-  <h1>{{ $t('titulo') }}</h1>
+  <div
+    class="grid grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4"
+  >
+    <UCard v-for="(video, index) in videos" :key="index">
+      <template #header>
+        <h2>{{ video.descricao }}</h2>
+        <p v-data-horario="'dd/mm/yyyy'">{{ video.data_postagem }}</p>
+      </template>
 
-  <div class="videos">
-    <div v-for="(video, index) in videos" :key="index">
-      <h2>{{ video.descricao }}</h2>
-      <p v-data-horario="'dd/mm/yyyy'">{{ video.data_postagem }}</p>
       <iframe
         :src="video.url"
-        width="550"
-        height="400"
+        class="h-48 h-full w-full"
         title="Youtube video player"
         frameborder="0"
       ></iframe>
 
-      <div>
-        <button @click.prevent="adicionarFavoritos(video)">
-          Adicionar Favorito
-        </button>
-      </div>
-    </div>
+      <template #footer>
+        <div class="flex justify-between">
+          <UButton @click.prevent="adicionarFavorito(video)">
+            Adicionar Favorito
+          </UButton>
+
+          <NuxtLink
+            :to="{ name: 'videos-id', params: { id: video.id.toString() } }"
+          >
+            <UButton label="Ver Vídeo" color="gray">
+              <template #trailing>
+                <UIcon name="i-heroicons-arrow-right-20-solid" />
+              </template>
+            </UButton>
+          </NuxtLink>
+        </div>
+      </template>
+    </UCard>
   </div>
 </template>
 
-<style scoped>
-.videos {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.videos button {
-  display: inline-block;
+<style>
+.card {
 }
 </style>

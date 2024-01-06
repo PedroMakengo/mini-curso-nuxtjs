@@ -1,11 +1,8 @@
 <script lang="ts">
-import { useFavoritos } from '~/composables/states'
 import { useVideoStore } from '../../../stores/video'
 
 export default defineComponent({
   setup() {
-    // const favoritos = useFavoritos()
-
     const videoStore = useVideoStore()
     const { $toast } = useNuxtApp()
     const { favoritos } = storeToRefs(videoStore)
@@ -28,41 +25,46 @@ export default defineComponent({
 
 <template>
   <div>
-    <NuxtLink to="/videos">Vídeos</NuxtLink>
-    <br />
+    <h1 class="text-4xl pt-4 pb-6">{{ $t('tituloFavoritos') }}</h1>
 
-    <h1>{{ $t('tituloFavoritos') }}</h1>
-
-    <div class="videos">
-      <div v-for="(video, index) in favoritos" :key="index">
-        <h2>{{ video.descricao }}</h2>
-        <p>{{ converteDataBrasil(video.data_postagem) }}</p>
+    <div
+      class="grid grid-cols-2 lg:grid-cols-3 items-center justify-center gap-4"
+    >
+      <UCard v-for="(video, index) in favoritos" :key="index">
+        <template #header>
+          <h2>{{ video.descricao }}</h2>
+          <p>{{ converteDataBrasil(video.data_postagem) }}</p>
+        </template>
         <iframe
           :src="video.url"
-          width="550"
-          height="400"
+          class="h-48 h-full w-full"
           title="Youtube video player"
           frameborder="0"
         ></iframe>
 
-        <div>
-          <button @click="removeFavorito(video.id)">Remover Favorito</button>
-        </div>
-      </div>
+        <template #footer>
+          <div class="flex justify-between">
+            <UButton @click="removeFavorito(video.id)"
+              >Remover Favorito</UButton
+            >
+
+            <NuxtLink
+              :to="{ name: 'videos-id', params: { id: video.id.toString() } }"
+            >
+              <UButton label="Ver Vídeo" color="gray">
+                <template #trailing>
+                  <UIcon name="i-heroicons-arrow-right-20-solid" />
+                </template>
+              </UButton>
+            </NuxtLink>
+          </div>
+        </template>
+      </UCard>
     </div>
   </div>
 </template>
 
-<style scoped>
-.videos {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.videos button {
-  display: inline-block;
+<style>
+.card {
 }
 </style>

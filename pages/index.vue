@@ -1,8 +1,7 @@
 <script></script>
 
 <template>
-  <Header />
-  <div>Pagina Principal</div>
+  <div class="text-5xl text-center">Pagina Principal</div>
 </template>
 
 <style scoped></style>

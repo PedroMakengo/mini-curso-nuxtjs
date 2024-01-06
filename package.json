@@ -19,6 +19,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@nuxt/ui": "^2.11.1",
     "@nuxtjs/i18n": "^8.0.0",
     "@pinia/nuxt": "^0.5.1",
     "pinia": "^2.1.7",
