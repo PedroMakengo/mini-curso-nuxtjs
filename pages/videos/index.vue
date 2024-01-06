@@ -49,6 +49,7 @@ export default defineComponent({
   <div>Vídeos</div>
 
   <NuxtLink to="/videos/favoritos">Favoritos</NuxtLink>
+  <h1>{{ $t('titulo') }}</h1>
 
   <div class="videos">
     <div v-for="(video, index) in videos" :key="index">

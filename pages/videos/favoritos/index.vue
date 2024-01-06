@@ -6,8 +6,9 @@ export default defineComponent({
   setup() {
     // const favoritos = useFavoritos()
 
-    const { $toast } = useNuxtApp()
     const videoStore = useVideoStore()
+    const { locale } = useI18n()
+    const { $toast } = useNuxtApp()
     const { favoritos } = storeToRefs(videoStore)
 
     // FUNÇÕES
@@ -21,7 +22,7 @@ export default defineComponent({
       $toast.error('Removido com sucesso')
     }
 
-    return { favoritos, converteDataBrasil, removeFavorito }
+    return { locale, favoritos, converteDataBrasil, removeFavorito }
   },
 })
 </script>
@@ -30,6 +31,13 @@ export default defineComponent({
   <div>
     <NuxtLink to="/videos">Vídeos</NuxtLink>
     <br />
+
+    <select v-model="locale">
+      <option value="pt">pt</option>
+      <option value="en">en</option>
+    </select>
+
+    <h1>{{ $t('tituloFavoritos') }}</h1>
 
     <div class="videos">
       <div v-for="(video, index) in favoritos" :key="index">
