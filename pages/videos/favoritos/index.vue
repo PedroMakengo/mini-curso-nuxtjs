@@ -6,8 +6,8 @@ export default defineComponent({
   setup() {
     // const favoritos = useFavoritos()
 
-    const { $toast } = useNuxtApp()
     const videoStore = useVideoStore()
+    const { $toast } = useNuxtApp()
     const { favoritos } = storeToRefs(videoStore)
 
     // FUNÇÕES
@@ -30,6 +30,8 @@ export default defineComponent({
   <div>
     <NuxtLink to="/videos">Vídeos</NuxtLink>
     <br />
+
+    <h1>{{ $t('tituloFavoritos') }}</h1>
 
     <div class="videos">
       <div v-for="(video, index) in favoritos" :key="index">
